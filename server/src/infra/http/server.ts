@@ -10,6 +10,7 @@ import {
 } from "fastify-type-provider-zod";
 import { transformSwaggerSchema } from "./transform-swagger-schema";
 import { envConfig } from "@/env";
+import { createLinkRoute } from "./routes/create-link";
 
 const server = fastify();
 
@@ -45,6 +46,8 @@ server.register(fastifySwagger, {
 server.register(fastifySwaggerUi, {
   routePrefix: "/docs",
 });
+
+server.register(createLinkRoute);
 
 server.listen({ port: envConfig.PORT, host: "0.0.0.0" }).then(() => {
   console.log("HTTP server running");
