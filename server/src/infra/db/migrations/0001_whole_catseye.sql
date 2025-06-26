@@ -1,0 +1,1 @@
+ALTER TABLE "links" ALTER COLUMN "qtd_access" SET DATA TYPE integer;
