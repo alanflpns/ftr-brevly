@@ -7,7 +7,7 @@ import { createLink } from "./create-link";
 
 describe("create link", () => {
   beforeAll(async () => {
-    await db.delete(schema.links).execute();
+    await db.delete(schema.links);
   });
 
   it("should be able to create a link", async () => {

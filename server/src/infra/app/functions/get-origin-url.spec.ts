@@ -6,7 +6,7 @@ import { getOriginUrl } from "./get-origin-url";
 
 describe("get origin link", () => {
   beforeAll(async () => {
-    await db.delete(schema.links).execute();
+    await db.delete(schema.links);
   });
 
   it("should be able to get a origin url", async () => {

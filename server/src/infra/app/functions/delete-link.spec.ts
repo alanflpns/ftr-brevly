@@ -7,7 +7,7 @@ import { deleteLink } from "./delete-link";
 
 describe("delete link", () => {
   beforeAll(async () => {
-    await db.delete(schema.links).execute();
+    await db.delete(schema.links);
   });
 
   it("should be able to delete a link", async () => {
