@@ -16,7 +16,7 @@ type createLinkInput = z.input<typeof createLinkInput>;
 
 export async function createLink(
   input: createLinkInput
-): Promise<Either<LinkAlreadyExists, null>> {
+): Promise<Either<Error, { id: string }>> {
   const { originUrl, shortUrl } = createLinkInput.parse(input);
 
   const customShortUrl = `brev.ly/${shortUrl}`;
@@ -34,11 +34,14 @@ export async function createLink(
     return makeLeft(new InvalidFormat());
   }
 
-  await db.insert(schema.links).values({
-    originUrl,
-    shortUrl: customShortUrl,
-    qtdAccess: 0,
-  });
+  const [newLink] = await db
+    .insert(schema.links)
+    .values({
+      originUrl,
+      shortUrl: customShortUrl,
+      qtdAccess: 0,
+    })
+    .returning({ id: schema.links.id });
 
-  return makeRight(null);
+  return makeRight({ id: newLink.id });
 }
