@@ -12,6 +12,7 @@ import { transformSwaggerSchema } from "./transform-swagger-schema";
 import { envConfig } from "@/env";
 import { createLinkRoute } from "./routes/create-link";
 import { deleteLinkRoute } from "./routes/delete-link";
+import { getOriginUrlRoute } from "./routes/get-origin-url";
 
 const server = fastify();
 
@@ -50,6 +51,7 @@ server.register(fastifySwaggerUi, {
 
 server.register(createLinkRoute);
 server.register(deleteLinkRoute);
+server.register(getOriginUrlRoute);
 
 server.listen({ port: envConfig.PORT, host: "0.0.0.0" }).then(() => {
   console.log("HTTP server running");

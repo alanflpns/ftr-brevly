@@ -1,6 +1,5 @@
-import { createLink } from "@/infra/app/functions/create-link";
 import { deleteLink } from "@/infra/app/functions/delete-link";
-import { isLeft, isRight, unwrapEither } from "@/shared/either";
+import { isRight, unwrapEither } from "@/shared/either";
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
@@ -23,8 +22,6 @@ export const deleteLinkRoute: FastifyPluginAsyncZod = async (server) => {
     },
     async (req, res) => {
       const { id } = req.params;
-
-      console.log("Deleting link with ID:", id);
 
       if (!id) {
         return res.status(400).send({

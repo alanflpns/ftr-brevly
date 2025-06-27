@@ -1,7 +1,6 @@
 import { db } from "@/infra/db";
 import { schema } from "@/infra/db/schemas";
 import { isLeft, isRight } from "@/shared/either";
-import { eq } from "drizzle-orm";
 import { beforeAll, describe, expect, it } from "vitest";
 import { createLink } from "./create-link";
 import { deleteLink } from "./delete-link";
@@ -12,7 +11,7 @@ describe("delete link", () => {
   });
 
   it("should be able to delete a link", async () => {
-    const shortUrl = "example1";
+    const shortUrl = "example-delete";
 
     const linkCreated = await createLink({
       originUrl: "https://example.com",
