@@ -1,24 +1,31 @@
 import { db } from "@/infra/db";
 import { schema } from "@/infra/db/schemas";
 import { isLeft, isRight } from "@/shared/either";
-import { beforeAll, describe, expect, it } from "vitest";
-import { createLink } from "./create-link";
+import { beforeEach, describe, expect, it } from "vitest";
 import { deleteLink } from "./delete-link";
 
 describe("delete link", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await db.delete(schema.links);
   });
 
   it("should be able to delete a link", async () => {
     const shortUrl = "example-delete";
 
-    const linkCreated = await createLink({
-      originUrl: "https://example.com",
-      shortUrl,
-    });
+    const customShortUrl = `brev.ly/${shortUrl}`;
 
-    const sut = await deleteLink(linkCreated.right?.id || "");
+    const [linkCreated] = await db
+      .insert(schema.links)
+      .values({
+        originUrl: "https://example.com",
+        shortUrl: customShortUrl,
+        qtdAccess: 0,
+      })
+      .returning({
+        id: schema.links.id,
+      });
+
+    const sut = await deleteLink(linkCreated.id);
 
     expect(isRight(sut)).toBe(true);
   });

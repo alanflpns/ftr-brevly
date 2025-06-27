@@ -1,6 +1,7 @@
 import { Either, makeRight } from "@/shared/either";
 import { db } from "@/infra/db";
 import { schema } from "@/infra/db/schemas";
+import { desc } from "drizzle-orm";
 
 type GetUploadsOutput = {
   links: {
@@ -21,7 +22,10 @@ export async function getLinks(): Promise<Either<Error, GetUploadsOutput>> {
       qtdAccess: schema.links.qtdAccess,
       createdAt: schema.links.createdAt,
     })
-    .from(schema.links);
+    .from(schema.links)
+    .orderBy((fields) => {
+      return desc(fields.id);
+    });
 
   return makeRight({ links });
 }

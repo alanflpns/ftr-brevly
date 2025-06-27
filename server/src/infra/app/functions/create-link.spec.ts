@@ -2,11 +2,11 @@ import { db } from "@/infra/db";
 import { schema } from "@/infra/db/schemas";
 import { isLeft, isRight } from "@/shared/either";
 import { eq } from "drizzle-orm";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { createLink } from "./create-link";
 
 describe("create link", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await db.delete(schema.links);
   });
 

@@ -1,12 +1,11 @@
 import { db } from "@/infra/db";
 import { schema } from "@/infra/db/schemas";
-import { isLeft, makeRight } from "@/shared/either";
-import { beforeAll, describe, expect, it } from "vitest";
-import { getOriginUrl } from "./get-origin-url";
+import { makeRight } from "@/shared/either";
+import { beforeEach, describe, expect, it } from "vitest";
 import { getLinks } from "./get-links";
 
 describe("get all link", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await db.delete(schema.links);
   });
 

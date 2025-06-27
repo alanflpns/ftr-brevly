@@ -8,13 +8,21 @@ export async function getOriginUrl(
   shortUrl: string
 ): Promise<Either<Error, { originUrl: string }>> {
   const [link] = await db
-    .select({ originUrl: schema.links.originUrl })
+    .select({
+      originUrl: schema.links.originUrl,
+      qtdAccess: schema.links.qtdAccess,
+    })
     .from(schema.links)
     .where(eq(schema.links.shortUrl, shortUrl));
 
   if (!link) {
     return makeLeft(new LinkNotFound());
   }
+
+  await db
+    .update(schema.links)
+    .set({ qtdAccess: link.qtdAccess + 1 })
+    .where(eq(schema.links.shortUrl, shortUrl));
 
   return makeRight({ originUrl: link.originUrl });
 }
