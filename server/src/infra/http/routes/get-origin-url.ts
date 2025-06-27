@@ -1,4 +1,4 @@
-import { getOriginUrl } from "@/infra/app/functions/get-origin-url";
+import { getOriginUrl } from "@/app/functions/get-origin-url";
 import { isRight, unwrapEither } from "@/shared/either";
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";

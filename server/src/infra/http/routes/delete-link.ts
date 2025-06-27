@@ -1,4 +1,4 @@
-import { deleteLink } from "@/infra/app/functions/delete-link";
+import { deleteLink } from "@/app/functions/delete-link";
 import { isRight, unwrapEither } from "@/shared/either";
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
