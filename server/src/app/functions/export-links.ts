@@ -46,7 +46,7 @@ export async function exportLinks(): Promise<Either<never, ExportLinksOutput>> {
       },
       {
         key: "created_at",
-        header: "Uploaded At",
+        header: "Created At",
       },
     ],
   });

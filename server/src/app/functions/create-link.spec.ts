@@ -5,11 +5,11 @@ import { eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vitest";
 import { createLink } from "./create-link";
 
-describe("create link", () => {
-  beforeEach(async () => {
-    await db.delete(schema.links);
-  });
+beforeEach(async () => {
+  await db.delete(schema.links);
+});
 
+describe("create link", () => {
   it("should be able to create a link", async () => {
     const shortUrl = "example";
 
