@@ -9,3 +9,34 @@ services:
       - POSTGRES_DB=brevly
     volumes:
       - "./docker:/docker-entrypoint-initdb.d"
+      - db:/var/lib/postgresql/data
+    networks:
+      - brevly
+      - db
+
+  app:
+    build:
+      context: .
+    depends_on:
+      - pg
+    ports:
+      - 3333:3333
+    environment:
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+      - DATABASE_URL=${DATABASE_URL}
+      - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
+      - CLOUDFLARE_ACCESS_KEY_ID=${CLOUDFLARE_ACCESS_KEY_ID}
+      - CLOUDFLARE_SECRET_ACCESS_KEY=${CLOUDFLARE_SECRET_ACCESS_KEY}
+      - CLOUDFLARE_BUCKET=${CLOUDFLARE_BUCKET}
+      - CLOUDFLARE_PUBLIC_URL=${CLOUDFLARE_PUBLIC_URL}
+    networks:
+      - brevly
+
+volumes:
+  db:
+networks:
+  brevly:
+    driver: bridge
+  db:
+    driver: bridge
