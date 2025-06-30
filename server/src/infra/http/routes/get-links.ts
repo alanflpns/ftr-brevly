@@ -5,7 +5,7 @@ import { z } from "zod";
 
 export const getLinksRoute: FastifyPluginAsyncZod = async (server) => {
   server.get(
-    "/links/",
+    "/links",
     {
       schema: {
         summary: "Get all links",
