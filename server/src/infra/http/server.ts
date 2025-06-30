@@ -34,7 +34,10 @@ server.setErrorHandler((error, req, res) => {
   return res.status(500).send({ message: "Internal server error." });
 });
 
-server.register(fastifyCors, { origin: "*" });
+server.register(fastifyCors, {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+});
 
 server.register(fastifyMultipart);
 server.register(fastifySwagger, {
