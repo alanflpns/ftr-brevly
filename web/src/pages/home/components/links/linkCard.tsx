@@ -3,26 +3,27 @@ import { IconButton } from "../../../../components/iconButton";
 import type { Link } from "../../../../interfaces/link";
 import { useMutation } from "@tanstack/react-query";
 import { useLinkContext } from "../../contexts/linkContext";
+import { toast } from "react-toastify";
 
 interface Props {
   link: Link;
 }
 
 export function LinkCard({ link }: Props) {
-  const { refetch, deleteLink } = useLinkContext();
+  const { query, deleteLink } = useLinkContext();
 
   const mutateDeleteLink = useMutation({
     mutationFn: (linkId: string) => deleteLink(linkId),
     onSuccess: () => {
-      refetch();
+      query.refetch();
     },
   });
 
   function handleCopyShortLink(shortUrl: string) {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(shortUrl).then(
-        () => console.log("Texto copiado com sucesso!"),
-        (err) => console.error("Erro ao copiar texto:", err)
+        () => toast.info(`${shortUrl} copiado para a área de transferência.`),
+        (err) => toast.error("Erro ao copiar o link:", err)
       );
     }
   }
@@ -51,7 +52,15 @@ export function LinkCard({ link }: Props) {
           >
             <CopyIcon />
           </IconButton>
-          <IconButton onClick={() => mutateDeleteLink.mutate(link.id)}>
+          <IconButton
+            onClick={() => {
+              if (window.confirm("Tem certeza que deseja excluir este link?")) {
+                mutateDeleteLink.mutate(link.id);
+              }
+            }}
+            disabled={mutateDeleteLink.isPending}
+            isLoading={mutateDeleteLink.isPending}
+          >
             <TrashIcon />
           </IconButton>
         </div>

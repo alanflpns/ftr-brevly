@@ -1,17 +1,19 @@
 /* eslint-disable react-refresh/only-export-components */
 
 import { createContext, useCallback, useContext, type ReactNode } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, type UseQueryResult } from "@tanstack/react-query";
 import { LinkService } from "../../../services/v1/link";
 import type { Link } from "../../../interfaces/link";
 import { formatDate } from "../../../infra/adapters/dateAdapter";
 import { envConfig } from "../../../env";
 
 interface LinkContextType {
-  data?: {
-    links: Link[];
-  };
-  refetch: () => void;
+  query: UseQueryResult<
+    {
+      links: Link[];
+    },
+    Error
+  >;
   createLink: (data: { originUrl: string; shortUrl: string }) => Promise<void>;
   getAllLinks: () => Promise<{ links: Link[] }>;
   downloadCSV: () => Promise<void>;
@@ -25,7 +27,7 @@ interface createContextProviderProps {
 export const LinkContext = createContext({} as LinkContextType);
 
 export function LinkContextProvider({ children }: createContextProviderProps) {
-  const { data, refetch } = useQuery({
+  const query = useQuery({
     queryKey: ["links"],
     queryFn: () => getAllLinks(),
   });
@@ -81,8 +83,7 @@ export function LinkContextProvider({ children }: createContextProviderProps) {
   return (
     <LinkContext.Provider
       value={{
-        data,
-        refetch,
+        query,
         createLink,
         getAllLinks,
         downloadCSV,

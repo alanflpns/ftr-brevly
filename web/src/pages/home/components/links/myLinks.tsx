@@ -4,9 +4,10 @@ import { EmptyList } from "./emptyList";
 import { useMutation } from "@tanstack/react-query";
 import { LinkCard } from "./linkCard";
 import { useLinkContext } from "../../contexts/linkContext";
+import { LoadingList } from "./loadingList";
 
 export function MyLinks() {
-  const { data, downloadCSV } = useLinkContext();
+  const { query, downloadCSV } = useLinkContext();
 
   const mutateDownloadCSV = useMutation({
     mutationFn: () => downloadCSV(),
@@ -20,7 +21,12 @@ export function MyLinks() {
           variant="secondary"
           icon={<DownloadSimpleIcon />}
           onClick={() => mutateDownloadCSV.mutate()}
-          disabled={!data || !data.links.length}
+          disabled={
+            !query.data ||
+            !query.data.links.length ||
+            mutateDownloadCSV.isPending
+          }
+          isLoading={mutateDownloadCSV.isPending}
         >
           Baixar CSV
         </Button>
@@ -28,20 +34,24 @@ export function MyLinks() {
 
       <div className="border-b border-gray-200 my-5" />
 
-      <div className="max-h-[calc(100dvh-320px)] overflow-auto flex flex-col gap-5">
-        {data?.links.length ? (
-          data.links.map((link, index, links) => (
-            <div key={link.id}>
-              <LinkCard link={link} />
-              {index < links.length - 1 && (
-                <div className="border-b border-gray-200 mt-5" />
-              )}
-            </div>
-          ))
-        ) : (
-          <EmptyList />
-        )}
-      </div>
+      {query.isLoading ? (
+        <LoadingList />
+      ) : (
+        <div className="max-h-[calc(100dvh-320px)] overflow-auto flex flex-col gap-5">
+          {query.data?.links.length ? (
+            query.data.links.map((link, index, links) => (
+              <div key={link.id}>
+                <LinkCard link={link} />
+                {index < links.length - 1 && (
+                  <div className="border-b border-gray-200 mt-5" />
+                )}
+              </div>
+            ))
+          ) : (
+            <EmptyList />
+          )}
+        </div>
+      )}
     </section>
   );
 }

@@ -22,6 +22,6 @@ describe("delete link", () => {
     const sut = await deleteLink("123");
 
     expect(isLeft(sut)).toBe(true);
-    expect(sut.left?.message).toBe("Link not found");
+    expect(sut.left?.message).toBe("Link não encontrado");
   });
 });

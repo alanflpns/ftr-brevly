@@ -42,7 +42,7 @@ describe("create link", () => {
     });
 
     expect(isLeft(sut)).toBe(true);
-    expect(sut.left?.message).toBe("Link with this short URL already exists");
+    expect(sut.left?.message).toBe("Essa URL encurtada já existe");
   });
 
   it("should not be able to create a link with an invalid format", async () => {
@@ -52,6 +52,6 @@ describe("create link", () => {
     });
 
     expect(isLeft(sut)).toBe(true);
-    expect(sut.left?.message).toBe("Invalid link format");
+    expect(sut.left?.message).toBe("Formato de link inválido");
   });
 });

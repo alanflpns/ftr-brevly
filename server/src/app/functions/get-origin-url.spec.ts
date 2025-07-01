@@ -23,7 +23,7 @@ describe("get origin link", () => {
     const sut = await getOriginUrl("example");
 
     expect(isLeft(sut)).toBe(true);
-    expect(sut.left?.message).toBe("Link not found");
+    expect(sut.left?.message).toBe("Link não encontrado");
   });
 
   it("should increment the access count when getting the origin URL", async () => {
