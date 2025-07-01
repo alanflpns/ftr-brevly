@@ -29,12 +29,15 @@ export function LinkCard({ link }: Props) {
 
   return (
     <div className="flex justify-between">
-      <div className="flex flex-col mr-5 truncate cursor-pointer">
+      <div
+        className="flex flex-col mr-5 truncate cursor-pointer"
+        onClick={() => window.open(link.shortUrl.value, "_blank")}
+      >
         <span
           className="truncate text-blue-base font-semibold"
-          title={link.shortUrl}
+          title={link.shortUrl.formatted}
         >
-          {link.shortUrl}
+          {link.shortUrl.formatted}
         </span>
         <span className="truncate text-sm text-gray-500" title={link.originUrl}>
           {link.originUrl}
@@ -43,7 +46,9 @@ export function LinkCard({ link }: Props) {
       <div className="flex items-center gap-5">
         <span className="truncate">{link.qtdAccess} acessos</span>
         <div className="flex gap-1">
-          <IconButton onClick={() => handleCopyShortLink(link.shortUrl)}>
+          <IconButton
+            onClick={() => handleCopyShortLink(link.shortUrl.formatted)}
+          >
             <CopyIcon />
           </IconButton>
           <IconButton onClick={() => mutateDeleteLink.mutate(link.id)}>

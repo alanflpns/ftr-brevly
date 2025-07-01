@@ -45,9 +45,13 @@ export function LinkContextProvider({ children }: createContextProviderProps) {
     const formattedData: Link[] = links.map((link) => ({
       id: link.id,
       originUrl: link.originUrl,
-      shortUrl: `${envConfig.VITE_FRONTEND_URL.replace(/^https?:\/\/?/, "")}/${
-        link.shortUrl
-      }`,
+      shortUrl: {
+        value: `${envConfig.VITE_FRONTEND_URL}/${link.shortUrl}`,
+        formatted: `${envConfig.VITE_FRONTEND_URL.replace(
+          /^https?:\/\/?/,
+          ""
+        )}/${link.shortUrl}`,
+      },
       qtdAccess: link.qtdAccess,
       createdAt: {
         value: link.createdAt,

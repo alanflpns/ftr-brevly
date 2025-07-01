@@ -12,7 +12,8 @@ export interface LinkResponseItem {
   createdAt: string;
 }
 
-export interface Link extends Omit<LinkResponseItem, "createdAt"> {
+export interface Link extends Omit<LinkResponseItem, "shortUrl" | "createdAt"> {
+  shortUrl: IFormatValue<string>;
   createdAt: IFormatValue<string>;
 }
 
