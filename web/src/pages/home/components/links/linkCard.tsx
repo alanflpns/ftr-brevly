@@ -2,15 +2,14 @@ import { CopyIcon, TrashIcon } from "@phosphor-icons/react";
 import { IconButton } from "../../../../components/iconButton";
 import type { Link } from "../../../../interfaces/link";
 import { useMutation } from "@tanstack/react-query";
-import { useLinks } from "../../hooks/useLinks";
+import { useLinkContext } from "../../contexts/linkContext";
 
 interface Props {
   link: Link;
-  refetch: () => void;
 }
 
-export function LinkCard({ link, refetch }: Props) {
-  const { deleteLink } = useLinks();
+export function LinkCard({ link }: Props) {
+  const { refetch, deleteLink } = useLinkContext();
 
   const mutateDeleteLink = useMutation({
     mutationFn: (linkId: string) => deleteLink(linkId),

@@ -29,18 +29,16 @@ describe("get origin link", () => {
   it("should increment the access count when getting the origin URL", async () => {
     const shortUrl = "example-increment-access";
 
-    const customShortUrl = `brev.ly/${shortUrl}`;
-
-    const initialLink = await makeLink({ shortUrl: customShortUrl });
+    const initialLink = await makeLink({ shortUrl: shortUrl });
 
     expect(initialLink.qtdAccess).toBe(0);
 
-    await getOriginUrl(customShortUrl);
+    await getOriginUrl(shortUrl);
 
     const [updatedLink] = await db
       .select()
       .from(schema.links)
-      .where(eq(schema.links.shortUrl, customShortUrl));
+      .where(eq(schema.links.shortUrl, shortUrl));
 
     expect(updatedLink.qtdAccess).toBe(1);
   });

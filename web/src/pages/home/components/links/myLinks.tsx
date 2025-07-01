@@ -1,17 +1,12 @@
 import { DownloadSimpleIcon } from "@phosphor-icons/react";
 import { Button } from "../../../../components/button";
 import { EmptyList } from "./emptyList";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useLinks } from "../../hooks/useLinks";
+import { useMutation } from "@tanstack/react-query";
 import { LinkCard } from "./linkCard";
+import { useLinkContext } from "../../contexts/linkContext";
 
 export function MyLinks() {
-  const { getAllLinks, downloadCSV } = useLinks();
-
-  const { data, refetch } = useQuery({
-    queryKey: ["links"],
-    queryFn: () => getAllLinks(),
-  });
+  const { data, downloadCSV } = useLinkContext();
 
   const mutateDownloadCSV = useMutation({
     mutationFn: () => downloadCSV(),
@@ -37,36 +32,7 @@ export function MyLinks() {
         {data?.links.length ? (
           data.links.map((link, index, links) => (
             <div key={link.id}>
-              <LinkCard link={link} refetch={refetch} />
-              {/* <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} />
-              <LinkCard key={link.id} link={link} refetch={refetch} /> */}
+              <LinkCard link={link} />
               {index < links.length - 1 && (
                 <div className="border-b border-gray-200 mt-5" />
               )}

@@ -20,12 +20,10 @@ describe("create link", () => {
 
     expect(isRight(sut)).toBe(true);
 
-    const customShortUrl = `brev.ly/${shortUrl}`;
-
     const result = await db
       .select()
       .from(schema.links)
-      .where(eq(schema.links.shortUrl, customShortUrl));
+      .where(eq(schema.links.shortUrl, shortUrl));
 
     expect(result).toHaveLength(1);
   });

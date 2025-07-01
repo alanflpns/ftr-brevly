@@ -19,12 +19,10 @@ export async function createLink(
 ): Promise<Either<Error, { id: string }>> {
   const { originUrl, shortUrl } = createLinkInput.parse(input);
 
-  const customShortUrl = `brev.ly/${shortUrl}`;
-
   const existingLink = await db
     .select()
     .from(schema.links)
-    .where(eq(schema.links.shortUrl, customShortUrl));
+    .where(eq(schema.links.shortUrl, shortUrl));
 
   if (existingLink.length > 0) {
     return makeLeft(new LinkAlreadyExists());
@@ -38,7 +36,7 @@ export async function createLink(
     .insert(schema.links)
     .values({
       originUrl,
-      shortUrl: customShortUrl,
+      shortUrl,
       qtdAccess: 0,
     })
     .returning({ id: schema.links.id });

@@ -25,11 +25,11 @@ describe("export links", () => {
 
     const shortUrl = faker.string;
 
-    const link1 = await makeLink({ shortUrl: `brev.ly/example1` });
-    const link2 = await makeLink({ shortUrl: `brev.ly/example2` });
-    const link3 = await makeLink({ shortUrl: `brev.ly/example3` });
-    const link4 = await makeLink({ shortUrl: `brev.ly/example4` });
-    const link5 = await makeLink({ shortUrl: `brev.ly/example5` });
+    const link1 = await makeLink({ shortUrl: `example1` });
+    const link2 = await makeLink({ shortUrl: `example2` });
+    const link3 = await makeLink({ shortUrl: `example3` });
+    const link4 = await makeLink({ shortUrl: `example4` });
+    const link5 = await makeLink({ shortUrl: `example5` });
 
     const sut = await exportLinks();
 

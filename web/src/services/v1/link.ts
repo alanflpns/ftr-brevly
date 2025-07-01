@@ -6,6 +6,9 @@ import type {
 } from "../../interfaces/link";
 
 export const LinkService = {
+  createLink: async (data: { originUrl: string; shortUrl: string }) => {
+    return await api.post("/links", data);
+  },
   getLinks: async () => {
     return await api.get<LinkResponse>(`/links`);
   },

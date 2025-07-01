@@ -6,13 +6,13 @@ import type { InferInsertModel } from "drizzle-orm";
 export async function makeLink(
   overrides?: Partial<InferInsertModel<typeof schema.links>>
 ) {
-  const shortUrl = faker.string;
+  const shortUrl = faker.string.alphanumeric(6).toLowerCase();
 
   const result = await db
     .insert(schema.links)
     .values({
       originUrl: "https://example.com",
-      shortUrl: `brev.ly/${shortUrl}`,
+      shortUrl: shortUrl,
       qtdAccess: 0,
       ...overrides,
     })
